@@ -1,43 +1,297 @@
 {
   "name": "flavorbridge",
   "version": "1.0.0",
-  "description": "",
-  "main": "tailwind.config.js",
-  "directories": {
-    "doc": "docs",
-    "test": "tests"
+  "description": "🍳 Discover amazing flavor pairings with FlavorBridge - A cozy, professional ingredient pairing app inspired by Cozy Bear Cafe",
+  "main": "dist/main/main.js",
+  "homepage": "./",
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com"
   },
+  "license": "MIT",
+  "keywords": [
+    "food",
+    "cooking",
+    "pairing",
+    "ingredients",
+    "recipes",
+    "culinary",
+    "electron",
+    "react",
+    "desktop-app"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RohanSkaria/flavorbridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RohanSkaria/flavorbridge/issues"
+  },
+  
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"npm run dev:main\" \"npm run dev:renderer\"",
+    "dev:main": "electron .",
+    "dev:renderer": "vite",
+    "build": "npm run build:renderer && npm run build:main",
+    "build:renderer": "vite build",
+    "build:main": "tsc -p tsconfig.main.json",
+    "preview": "vite preview",
+    "electron": "electron .",
+    "electron:dev": "concurrently \"npm run dev:renderer\" \"wait-on http://localhost:3000 && electron .\"",
+    "pack": "npm run build && electron-builder",
+    "dist": "npm run build && electron-builder --publish=never",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "postinstall": "electron-builder install-app-deps",
+    "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint src --ext .ts,.tsx,.js,.jsx --fix",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "clean": "rimraf dist build out",
+    "clean:all": "rimraf dist build out node_modules && npm install",
+    "release": "npm run build && electron-builder --publish=always"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  
   "dependencies": {
-    "framer-motion": "^12.19.1",
-    "fuse.js": "^7.1.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.2",
-    "zustand": "^5.0.5"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.1",
+    "framer-motion": "^10.16.16",
+    "zustand": "^4.4.7",
+    "fuse.js": "^7.0.0",
+    "lucide-react": "^0.263.1"
   },
+  
   "devDependencies": {
-    "@types/node": "^24.0.4",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@typescript-eslint/eslint-plugin": "^8.35.0",
-    "@typescript-eslint/parser": "^8.35.0",
-    "@vitejs/plugin-react": "^4.6.0",
-    "autoprefixer": "^10.4.21",
-    "concurrently": "^9.2.0",
-    "electron": "^37.0.0",
-    "electron-builder": "^26.0.12",
-    "eslint": "^9.29.0",
-    "postcss": "^8.5.6",
-    "prettier": "^3.6.1",
-    "tailwindcss": "^4.1.10",
-    "typescript": "^5.8.3",
-    "vite": "^7.0.0"
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@types/node": "^20.10.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "electron": "^23.3.13",
+    "electron-builder": "^24.9.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.32",
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0",
+    "eslint": "^8.55.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "prettier": "^3.1.1",
+    "jest": "^29.7.0",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/jest-dom": "^6.1.6",
+    "@testing-library/user-event": "^14.5.1",
+    "rimraf": "^5.0.5"
+  },
+  
+  "build": {
+    "appId": "com.flavorbridge.app",
+    "productName": "FlavorBridge",
+    "copyright": "Copyright © 2024 FlavorBridge",
+    "buildVersion": "1.0.0",
+    
+    "directories": {
+      "output": "dist-electron"
+    },
+    
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    
+    "extraResources": [
+      {
+        "from": "src/assets",
+        "to": "assets",
+        "filter": ["**/*"]
+      }
+    ],
+    
+    "mac": {
+      "category": "public.app-category.food-and-drink",
+      "icon": "build/icon.icns",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["x64", "arm64"]
+        }
+      ]
+    },
+    
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    
+    "linux": {
+      "icon": "build/icon.png",
+      "category": "Office",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        },
+        {
+          "target": "deb",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "FlavorBridge"
+    },
+    
+    "dmg": {
+      "title": "FlavorBridge ${version}",
+      "icon": "build/icon.icns",
+      "iconSize": 100,
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "background": "build/dmg-background.png",
+      "format": "ULFO"
+    },
+    
+    "publish": {
+      "provider": "github",
+      "owner": "yourusername",
+      "repo": "flavorbridge"
+    }
+  },
+  
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": ["<rootDir>/src/test/setup.ts"],
+    "moduleNameMapping": {
+      "^@/(.*)$": "<rootDir>/src/renderer/$1",
+      "^@components/(.*)$": "<rootDir>/src/renderer/components/$1",
+      "^@pages/(.*)$": "<rootDir>/src/renderer/pages/$1",
+      "^@stores/(.*)$": "<rootDir>/src/renderer/stores/$1",
+      "^@services/(.*)$": "<rootDir>/src/renderer/services/$1",
+      "^@utils/(.*)$": "<rootDir>/src/renderer/utils/$1",
+      "^@styles/(.*)$": "<rootDir>/src/renderer/styles/$1",
+      "^@assets/(.*)$": "<rootDir>/src/assets/$1"
+    },
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/*.d.ts",
+      "!src/test/**/*"
+    ]
+  },
+  
+  "prettier": {
+    "semi": true,
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "printWidth": 100,
+    "tabWidth": 2,
+    "useTabs": false,
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "avoid",
+    "endOfLine": "lf"
+  },
+  
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "@typescript-eslint/recommended",
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended",
+      "plugin:react/jsx-runtime"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "react",
+      "react-hooks",
+      "react-refresh"
+    ],
+    "rules": {
+      "react-refresh/only-export-components": "warn",
+      "@typescript-eslint/no-unused-vars": "error",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "react/prop-types": "off",
+      "react/react-in-jsx-scope": "off"
+    },
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
+  },
+  
+  "browserslist": {
+    "production": [
+      "chrome >= 87"
+    ],
+    "development": [
+      "chrome >= 87"
+    ]
+  },
+  
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   }
 }

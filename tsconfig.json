@@ -1,0 +1,97 @@
+{
+  "compilerOptions": {
+    // === TARGET & MODULE ===
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "incremental": true,
+    "jsx": "react-jsx",
+    
+    // === JSX CONFIGURATION ===
+    "jsxImportSource": "react",
+    
+    // === TYPE CHECKING ===
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "useUnknownInCatchVariables": true,
+    "exactOptionalPropertyTypes": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+    
+    // === MODULES ===
+    "moduleDetection": "force",
+    "allowJs": true,
+    "checkJs": false,
+    
+    // === EMIT ===
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": true,
+    "removeComments": false,
+    "importHelpers": true,
+    "downlevelIteration": true,
+    
+    // === INTEROP CONSTRAINTS ===
+    "allowArbitraryExtensions": false,
+    "noErrorTruncation": true,
+    
+    // === PATH MAPPING ===
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/renderer/*"],
+      "@components/*": ["src/renderer/components/*"],
+      "@pages/*": ["src/renderer/pages/*"],
+      "@stores/*": ["src/renderer/stores/*"],
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/renderer/utils/*"],
+      "@styles/*": ["src/renderer/styles/*"],
+      "@assets/*": ["src/assets/*"],
+      "@main/*": ["src/main/*"]
+    },
+    
+    // === ADVANCED ===
+    "skipDefaultLibCheck": true,
+    
+    // === BUNDLER MODE ===
+    "allowUmdGlobalAccess": false
+  },
+  
+  // === INCLUDE/EXCLUDE ===
+  "include": [
+    "src/**/*"
+  ],
+  
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build"
+  ],
+  
+  // === TYPE ACQUISITION ===
+  "typeAcquisition": {
+    "enable": false,
+    "include": [],
+    "exclude": []
+  },
+  
+  // === COMPILER REFERENCES ===
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
