@@ -19,7 +19,7 @@ const createWindow = (): void => {
 
   // Load the app
   if (process.env.NODE_ENV === 'development') {
-    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.loadURL('http://localhost:5001');
     mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
@@ -28,6 +28,15 @@ const createWindow = (): void => {
   // Show when ready to prevent visual flash
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
+  });
+
+  // Open DevTools with keyboard shortcut
+  mainWindow.webContents.on('before-input-event', (_, input) => {
+    if (input.control || input.meta) {
+      if (input.key === 'i' || input.key === 'I') {
+        mainWindow.webContents.openDevTools();
+      }
+    }
   });
 
   // Create application menu
@@ -49,6 +58,20 @@ const createWindow = (): void => {
         { role: 'cut' },
         { role: 'copy' },
         { role: 'paste' }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'forceReload' },
+        { role: 'toggleDevTools' },
+        { type: 'separator' },
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' }
       ]
     }
   ];

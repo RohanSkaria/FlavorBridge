@@ -37,7 +37,7 @@
     "build:main": "tsc -p tsconfig.main.json",
     "preview": "vite preview",
     "electron": "electron .",
-    "electron:dev": "concurrently \"npm run dev:renderer\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron:dev": "concurrently \"npm run dev:renderer\" \"wait-on http://localhost:5001 && electron .\"",
     "pack": "npm run build && electron-builder",
     "dist": "npm run build && electron-builder --publish=never",
     "dist:mac": "npm run build && electron-builder --mac",

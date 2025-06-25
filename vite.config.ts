@@ -6,6 +6,7 @@ import { resolve } from 'path';
 // Professional build setup for Electron + React app
 
 export default defineConfig({
+  root: 'src/renderer',
   plugins: [
     react({
       // JSX runtime configuration
@@ -15,7 +16,7 @@ export default defineConfig({
 
   // === DEVELOPMENT SERVER ===
   server: {
-    port: 3000,
+    port: 5001,
     open: false, // Don't auto-open browser (Electron will handle this)
     host: 'localhost',
     strictPort: true,
@@ -25,14 +26,14 @@ export default defineConfig({
     
     // HMR configuration
     hmr: {
-      port: 3001,
+      port: 5001,
     },
   },
 
   // === BUILD CONFIGURATION ===
   build: {
     // Output directory
-    outDir: 'dist/renderer',
+    outDir: '../../dist/renderer',
     
     // Generate source maps for debugging
     sourcemap: true,
@@ -45,10 +46,6 @@ export default defineConfig({
     
     // Rollup options
     rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'src/renderer/index.html'),
-      },
-      
       output: {
         // Asset naming for caching
         assetFileNames: (assetInfo) => {

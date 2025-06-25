@@ -5,7 +5,7 @@ import {
   Search, 
   Filter, 
   SortAsc, 
-  Grid3X3, 
+  Grid, 
   List,
   Trash2,
   Share2,
@@ -295,7 +295,7 @@ const FavoritesPage: React.FC = () => {
                       }
                     `}
                   >
-                    <Grid3X3 className="w-4 h-4" />
+                    <Grid className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
